@@ -1,0 +1,96 @@
+body,
+.info-window-content {
+    margin: 0;
+    font-family: Verdana, Geneva, sans-serif;
+    background: bisque;
+}
+
+.header {
+    box-shadow: 0 0 15px black;
+}
+
+.header,
+footer {
+    text-align: center;
+    color: darkred;
+    margin: 10px;
+}
+
+.search {
+    width: 100%;
+    display: flex;
+}
+
+.search-box {
+    padding: 5px;
+    border-radius: 18px;
+    width: 280px;
+    margin-left: 70px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px darkred;
+}
+
+.app {
+    width: 90%;
+    height: 90%;
+    display: flex;
+    margin: auto;
+    box-shadow: 0 0 30px black;
+}
+
+.list {
+    order: 1;
+    flex-grow: 1;
+    background-color: darkred;
+    color: white;
+    margin: 10px;
+    box-shadow: 0 0 30px black;
+}
+
+.map {
+    order: 2;
+    flex-grow: 4;
+    background-color: #fff;
+    text-align: center;
+    height: 450px;
+    box-shadow: 0 0 30px black;
+    margin: 10px;
+}
+
+.results {
+    margin: 0;
+    padding: 0;
+}
+
+.place {
+    margin: 10px;
+    padding: 10px;
+    list-style: none;
+    background: rgb(234, 133, 51);
+    text-align: center;
+}
+
+footer {
+    font-size: 1em;
+}
+
+.title {
+    background-color: darkred;
+    color: white;
+}
+
+.content,
+.content a {
+    color: darkred;
+}
+
+@media only screen and (max-device-width: 959px),
+only screen and (max-width: 959px) {
+    .app {
+        flex-direction: column;
+    }
+    .search-box,
+    .list {
+        font-size: 1.5em;
+    }
+}
