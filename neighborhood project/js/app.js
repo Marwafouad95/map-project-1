@@ -160,7 +160,6 @@ function startApp() {
 
 $(document).ready(function(){
        $("#map").click(function(){
-        $("#map").append('<div class="map" id="map"> There has been an error loading Google Maps. Please Try Again.</div>');
         initMap();
         });
      });
