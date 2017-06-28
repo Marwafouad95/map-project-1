@@ -158,11 +158,6 @@ function startApp() {
     ko.applyBindings(new AppViewModel());
 }
 
-$(document).ready(function(){
-       $("#map").click(function(){
-        initMap();
-        });
-     });
 //Error Handing
 function errorHandling() {
     alert("Google Maps has failed to load.");
