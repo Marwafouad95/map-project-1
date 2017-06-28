@@ -1,3 +1,9 @@
+* {
+	margin:0;
+	padding:0;
+	list-style:none;
+	overflow:hidden;
+}
 body,
 .info-window-content {
     margin: 0;
@@ -5,7 +11,8 @@ body,
     background: bisque;
 }
 
-.header {
+.header ,
+footer {
     box-shadow: 0 0 15px black;
 }
 
@@ -57,7 +64,7 @@ footer {
     margin: 10px;
 }
 
-.results {
+.result {
     margin: 0;
     padding: 0;
 }
