@@ -3,7 +3,7 @@ var myLocations = [
     {
         name: 'Istanbul',
         address: '214 S Highland Ave, Pittsburgh, PA',
-        url: "https://en.wikipedia.org/wiki/Istanbul",
+        url: "",
         img: "img/1.jpg",
         lat: 41.008238,
         long: 28.978359
@@ -11,7 +11,7 @@ var myLocations = [
     {
         name: 'Antalya',
         address: '5469 Penn Ave Pittsburgh, PA 15206',
-        url: "https://en.wikipedia.org/wiki/Antalya",
+        url: "",
         img: "img/2.jpg",
         lat: 36.896891,
         long: 30.713323
@@ -19,7 +19,7 @@ var myLocations = [
     {
         name: 'Ankara',
         address: '236 Fifth Ave Pittsburgh, PA 15222',
-        url: "https://en.wikipedia.org/wiki/Ankara",
+        url: "",
         img: 'img/3.jpg',
         lat: 39.933363,
         long: 32.859742
@@ -27,7 +27,7 @@ var myLocations = [
     {
         name: 'Trabzon',
         address: '5608 Walnut St Pittsburgh, PA 15232',
-        url: "https://en.wikipedia.org/wiki/Trabzon",
+        url: "",
         img: "img/4.jpg",
         lat: 41.002697,
         long: 39.716763
@@ -35,7 +35,7 @@ var myLocations = [
     {
         name: 'Bursa',
         address: '5841 Penn Ave Pittsburgh, PA 15206',
-        url: "https://en.wikipedia.org/wiki/Bursa",
+        url: "",
         img: "img/images.jpg",
         lat: 40.188528,
         long: 29.060964
@@ -48,6 +48,8 @@ var map;
 var ko;
 var google;
 var alert;
+var clientID="MGNZSQQCETXG5MYA0NPCIQOIJ3L1JXRCPT04ATGXYCMEM2Y1";
+var clientSecret="C1TRHKKRNTDJWGLF4WYTLMFJFOBYTUF2BYU5YBKVC2FHD44R";
 
 // tells the view model what to do when a change occurs
 // Declaring global variables now to satisfy strict mode
@@ -56,12 +58,22 @@ var Location = function (data) {
     this.name = data.name;
     this.lat = data.lat;
     this.long = data.long;
-    this.url = data.url;
+    this.url = "";
     this.address = data.address;
     this.img = data.img;
     this.visible = ko.observable(true);
+	var cont='https://api.foursquare.com/v2/venues/search?ll='+ this.lat + ',' + this.long + '&client_id=' + clientID + '&client_secret=' + clientSecret + '&v=20161016' + '&query=' + this.name;
+    $.getJSON(cont).done(function(data) {
+		var results = data.response.venues[0];
+		self.url= results.url;
+		if (typeof self.url === 'undefined'){
+			self.url = "";
+		}
+	}).fail(function() {
+		alert("There was an error with the Foursquare API call. Please refresh the page and try again to load Foursquare data.");
+	});
     this.contentString = '<div class="info-window-content"><div class="title"><b>' + data.name + "</b></div>" +
-        '<div class="content"><a href="' + self.url + '">' + self.url + "</a></div>" +
+	    '<div class="content"><a href="' + self.url +'">' + self.url+ "</a></div>" +
         '<div class="content"><img src="' + self.img + '">' + "</div>" +
         '<div class="content">' + self.address + "</div></div>";
     this.infoWindow = new google.maps.InfoWindow({ content: self.contentString });
@@ -89,9 +101,9 @@ var Location = function (data) {
     //Add click event to each marker to open info window
     this.marker.addListener('click', function () {
         self.contentString = '<div class="info-window-content"><div class="title"><b>' + data.name + "</b></div>" +
+		'<div class="content"><a href="' + self.url +'">' + self.url + "</a></div>" +
             '<div class="content">' + self.address + "</div>" +
             '<div class="content"><img src="' + self.img + '">' + "</div>" +
-            '<div class="content"><a href="' + self.url + '">' + self.url + "</a></div></div>";
         self.infoWindow.setContent(self.contentString);
         self.infoWindow.open(map, this); // Open info window on correct marker when list item is clicked
         self.marker.setAnimation(google.maps.Animation.BOUNCE); //Markers will bounce when clicked
