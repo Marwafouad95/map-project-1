@@ -1,39 +1,39 @@
 //Hard coded inital Locations
 var myLocations = [
     {
-        name: 'Istanbul',
-        address: '214 S Highland Ave, Pittsburgh, PA',
-        img: "img/1.jpg",
-        lat: 41.008238,
-        long: 28.978359
+        name: 'Empire State Building Experience',
+        address: '',
+        img: "img/22.jpg",
+        lat: 40.748441,
+        long: -73.985664
     },
     {
-        name: 'Antalya',
-        address: '5469 Penn Ave Pittsburgh, PA 15206',
-        img: "img/2.jpg",
-        lat: 36.896891,
-        long: 30.713323
+        name: 'Statue of Liberty',
+        address: '',
+        img: "img/33.jpg",
+        lat: 40.6892,
+        long: -74.044502
     },
     {
-        name: 'Ankara',
-        address: '236 Fifth Ave Pittsburgh, PA 15222',
-        img: 'img/3.jpg',
-        lat: 39.933363,
-        long: 32.859742
+        name: 'Ellis Island Immigration Museum',
+        address: '',
+        img: 'img/44.jpg',
+        lat: 40.6997222 ,
+        long:  -74.0394444
     },
     {
-        name: 'Trabzon',
-        address: '5608 Walnut St Pittsburgh, PA 15232',
-        img: "img/4.jpg",
-        lat: 41.002697,
-        long: 39.716763
+        name: 'American Museum of Natural History',
+        address: '',
+        img: "img/55.jpg",
+        lat: 40.7813241,
+        long: -73.9739882
     },
     {
-        name: 'Bursa',
-        address: '5841 Penn Ave Pittsburgh, PA 15206',
-        img: "img/images.jpg",
-        lat: 40.188528,
-        long: 29.060964
+        name: 'The Metropolitan Museum of Art ',
+        address: '',
+        img: "img/66.jpg",
+        lat: 40.774399,
+        long: -73.965604
     }
 
 ];
@@ -55,7 +55,8 @@ var Location = function (data) {
     this.lat = data.lat;
     this.long = data.long;
     this.url = "";
-    this.address = data.address;
+	this.street="";
+    this.address = "";
     this.img = data.img;
     this.visible = ko.observable(true);
 	
@@ -66,11 +67,15 @@ var Location = function (data) {
 		if (typeof self.url === 'undefined'){
 			self.url = "";
 		}
+		self.street = results.location.formattedAddress[0];
+		self.street = results.location.formattedAddress[1];
+		
 	}).fail(function() {
 		alert("There was an error with the Foursquare API call. Please refresh the page and try again to load Foursquare data.");
 	});
     this.contentString = '<div class="info-window-content"><div class="title"><b>' + data.name + "</b></div>" +
 	    '<div class="content"><a href="' + self.url +'">' + self.url+ "</a></div>" +
+		'<div class="content">' + self.street + "</div>";
         '<div class="content"><img src="' + self.img + '">' + "</div>" +
         '<div class="content">' + self.address + "</div></div>";
     this.infoWindow = new google.maps.InfoWindow({ content: self.contentString });
@@ -100,7 +105,8 @@ var Location = function (data) {
         self.contentString = '<div class="info-window-content"><div class="title"><b>' + data.name + "</b></div>" +
 		'<div class="content"><a href="' + self.url +'">' + self.url + "</a></div>" +
             '<div class="content">' + self.address + "</div>" +
-            '<div class="content"><img src="' + self.img + '">' + "</div>" +
+			'<div class="content">' + self.street + "</div>"+
+            '<div class="content"><img src="' + self.img + '">' + "</div></div>";
         self.infoWindow.setContent(self.contentString);
         self.infoWindow.open(map, this); // Open info window on correct marker when list item is clicked
         self.marker.setAnimation(google.maps.Animation.BOUNCE); //Markers will bounce when clicked
@@ -129,7 +135,7 @@ function AppViewModel() {
     //Set the map options object properties
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 5,
-        center: { lat: 38.963745, lng: 35.243322 },
+        center: { lat: 40.7813241, lng: -73.9739882 },
         mapTypeControlOptions: {
             style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
         }
